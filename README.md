@@ -35,7 +35,7 @@ void setup() {
   webOTA.setDeviceName("My Device");
   
   // Add readouts
-  int sensorValue = 42;
+  static int sensorValue = 42;
   webOTA.addReadout("Temperature", sensorValue, "°C");
   
   // Add buttons
