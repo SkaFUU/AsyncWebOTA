@@ -1,5 +1,6 @@
 #include "AsyncWebOTA.h"
 #include <ArduinoJson.h>
+#include <Schedule.h>       // schedule_function
 
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
@@ -386,10 +387,14 @@ void AsyncWebOTA::handleUpdate(AsyncWebServerRequest *request, String filename,
 void AsyncWebOTA::restartDevice()
 {
   Serial.println("[WebOTA] Restarting device...");
-  delay(100);
 #if defined(ARDUINO_ARCH_RP2040)
+  delay(100);
   rp2040.restart();
 #else
-  ESP.restart();
+  schedule_function([]() {
+    delay(100);
+    WiFi.disconnect(true);
+    ESP.restart();
+  });
 #endif
 }
