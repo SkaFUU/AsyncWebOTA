@@ -41,7 +41,6 @@ void setup() {
   // Add buttons
   webOTA.addButton("restart", "Restart", []() {
     Serial.println("Restart requested");
-    delay(1000);
     AsyncWebOTA::restartDevice();
   });
 
